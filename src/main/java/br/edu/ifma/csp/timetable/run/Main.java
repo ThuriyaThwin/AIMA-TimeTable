@@ -39,13 +39,13 @@ public class Main {
 		
 		for (int i = 0; i < sol.getVariables().size(); i++) {
 			
-			Variable disciplina = new Variable("D_" + (i+1));
+			Variable disciplina = new Variable("D" + (i+1));
 			
 			if (sol.getVariables().contains(disciplina)) {
 				
 				for (Variable temp : sol.getVariables()) {
 						
-						if (temp.getName().contains(disciplina.getName())) {
+						if (temp.getName().endsWith(disciplina.getName())) {
 							
 							System.out.print(temp + " = " + sol.getAssignment(temp) + ", ");
 						}

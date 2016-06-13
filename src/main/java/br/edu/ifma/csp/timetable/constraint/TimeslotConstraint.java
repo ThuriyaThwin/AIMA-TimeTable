@@ -16,7 +16,7 @@ public class TimeslotConstraint implements Constraint {
 	private List<Timeslot> timeslots;
 	String[] professores;
 	
-	public TimeslotConstraint(List<Timeslot> timeslots, String[] professores) {
+	public TimeslotConstraint(List<Timeslot> timeslots, String [] professores) {
 		
 		this.scope = new ArrayList<Variable>();
 		this.timeslots = timeslots;
@@ -40,58 +40,6 @@ public class TimeslotConstraint implements Constraint {
 	public List<Variable> getScope() {
 		return scope;
 	}
-
-	/*@Override
-	public boolean isSatisfiedWith(Assignment assignment) {
-		
-		for (Timeslot slotA : timeslots) {
-			
-			for (Timeslot slotB : timeslots) {
-				
-				Variable profA = slotA.getProfessor();
-				Variable profB = slotB.getProfessor();
-				
-				if (profA.getName() != profB.getName()) {
-				
-					String valueA = (String) assignment.getAssignment(profA);
-					String valueB = (String) assignment.getAssignment(profB);
-					
-					if (valueA != null && valueB != null) {
-						
-						if (valueA.equals(valueB)) {
-							
-							for (Variable horarioA : slotA.getHorarios()) {
-								
-								for (Variable horarioB : slotB.getHorarios()) {
-									
-									String valHoraA = (String) assignment.getAssignment(horarioA);
-									String valHoraB = (String) assignment.getAssignment(horarioB);
-									
-									if (valHoraA != null && valHoraB != null) {
-										
-										String diaA = valHoraA.split("_")[0];
-										String horaA = valHoraA.split("_")[1];
-										
-										String diaB = valHoraB.split("_")[0];
-										String horaB = valHoraA.split("_")[1];
-										
-										if (diaA.equals(diaB) && horaA.equals(horaB))
-											return false;
-										
-										if (valHoraA.equals(valHoraB))
-											return false;
-									}
-								}
-							}
-							
-						}
-					}
-				}
-			}
-		}
-		
-		return true;
-	}*/
 	
 	public List<Variable> getHorariosByProfessor(String professor, Assignment assignment) {
 		
@@ -151,21 +99,6 @@ public class TimeslotConstraint implements Constraint {
 					if (valueX != null) {
 						list.add(valueX);
 					}
-					
-					/*for (Variable varY : horarios) {
-						
-						if (!varX.getName().equals(varY.getName())) {
-						
-							String valueX = (String) assignment.getAssignment(varX);
-							String valueY = (String) assignment.getAssignment(varY);
-							
-							if (valueX != null && valueY != null) {
-								
-								if (valueX == valueY)
-									return false;
-							}
-						}
-					}*/
 				}
 				
 				Set<String> set = new HashSet<String>(list);

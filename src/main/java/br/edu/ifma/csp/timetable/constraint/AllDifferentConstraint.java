@@ -1,6 +1,9 @@
 package br.edu.ifma.csp.timetable.constraint;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import aima.core.search.csp.Assignment;
 import aima.core.search.csp.Constraint;
@@ -9,15 +12,9 @@ import aima.core.search.csp.Variable;
 public class AllDifferentConstraint implements Constraint {
 	
 	private List<Variable> scope;
-	private String prefix;
 	
 	public AllDifferentConstraint(List<Variable> vars) {
 		this.scope = vars;
-	}
-	
-	public AllDifferentConstraint(List<Variable> vars, String prefix) {
-		this.scope = vars;
-		this.prefix = prefix;
 	}
 	
 	@Override
@@ -27,33 +24,26 @@ public class AllDifferentConstraint implements Constraint {
 
 	@Override
 	public boolean isSatisfiedWith(Assignment assignment) {
-			
-		boolean valido = true;
 		
-		for (Variable v : scope) {
+		if (scope.size() > 0) {
 			
-			if (v.getName().startsWith(prefix)) {
+			List<String> list = new ArrayList<String>();
 			
-				Object value = assignment.getAssignment(v);
+			for (Variable variable : scope) {
+				
+				String value = (String) assignment.getAssignment(variable);
 				
 				if (value != null) {
-					
-					for (Variable x : scope) {
-						
-						Object valueX = assignment.getAssignment(x);
-						
-						if (valueX != null) {
-							
-							if (v.getName() != x.getName() && value.equals(valueX)) {
-								
-								valido = false;
-							}
-						}
-					}
+					list.add(value);
 				}
 			}
+			
+			Set<String> set = new HashSet<String>(list);
+			
+			if (set.size() < list.size())
+				return false;
 		}
 		
-		return valido;
+		return true;
 	}
 }
