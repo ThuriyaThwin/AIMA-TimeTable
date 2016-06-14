@@ -33,7 +33,6 @@ public class Main {
 		sol = bts.solve(timetable);
 		
 		double end = System.currentTimeMillis();
-		//System.out.println(sol);
 		
 		System.out.println();
 		
@@ -59,7 +58,5 @@ public class Main {
 		}
 		
 		System.out.println("\nTime to solve = " + (end - start));
-		
-		System.out.println(timetable.getVariables().size());
 	}
 }

@@ -8,7 +8,7 @@ import aima.core.search.csp.CSP;
 import aima.core.search.csp.Domain;
 import aima.core.search.csp.Variable;
 import br.edu.ifma.csp.timetable.constraint.AllDifferentConstraint;
-import br.edu.ifma.csp.timetable.constraint.ProfessorDisciplinaConstraint;
+import br.edu.ifma.csp.timetable.constraint.PreferenciaDisciplinaProfessorConstraint;
 import br.edu.ifma.csp.timetable.constraint.TimeslotConstraint;
 import br.edu.ifma.csp.timetable.constraint.TimeslotDisciplinaConstraint;
 import br.edu.ifma.csp.timetable.model.Timeslot;
@@ -95,7 +95,7 @@ public class Timetable extends CSP {
 			
 			/** Um professor só poderá ser associado a uma disciplina a qual tem preferência **/
 			
-			addConstraint(new ProfessorDisciplinaConstraint(professor, disciplina, preferencias, valuesDisciplina));
+			addConstraint(new PreferenciaDisciplinaProfessorConstraint(professor, disciplina, preferencias, valuesDisciplina));
 			
 			/** Slot de tempo (aula): {1 professor, 1 disciplina, n horarios} **/
 			

@@ -8,7 +8,7 @@ import aima.core.search.csp.Assignment;
 import aima.core.search.csp.Constraint;
 import aima.core.search.csp.Variable;
 
-public class ProfessorDisciplinaConstraint implements Constraint {
+public class PreferenciaDisciplinaProfessorConstraint implements Constraint {
 	
 	private List<Variable> scope;
 	private Variable professor;
@@ -16,7 +16,7 @@ public class ProfessorDisciplinaConstraint implements Constraint {
 	private Map<String, Integer[]> prefs;
 	private String[] disciplinas;
 	
-	public ProfessorDisciplinaConstraint(Variable professor, Variable disciplina, Map<String, Integer[]> prefs, String[] disciplinas) {
+	public PreferenciaDisciplinaProfessorConstraint(Variable professor, Variable disciplina, Map<String, Integer[]> prefs, String[] disciplinas) {
 		this.scope = new ArrayList<Variable>();
 		this.scope.add(professor);
 		this.scope.add(disciplina);
