@@ -9,7 +9,8 @@ import aima.core.search.csp.Domain;
 import aima.core.search.csp.Variable;
 import br.edu.ifma.csp.timetable.constraint.AllDifferentConstraint;
 import br.edu.ifma.csp.timetable.constraint.PreferenciaDisciplinaProfessorConstraint;
-import br.edu.ifma.csp.timetable.constraint.TimeslotDisciplinaConstraint;
+import br.edu.ifma.csp.timetable.constraint.TimeslotDiasDiferentesConstraint;
+import br.edu.ifma.csp.timetable.constraint.TimeslotDiasIguasConstraint;
 import br.edu.ifma.csp.timetable.constraint.TimeslotProfessorConstraint;
 import br.edu.ifma.csp.timetable.model.Timeslot;
 
@@ -45,7 +46,7 @@ public class Timetable extends CSP {
 	
 	/** Valores para criar os horários proporcionais à carga horária de uma disciplina **/
 	
-	Integer [] valuesAula = {6, 4, 4, 4, 4, 4, 4, 4, 4, 4};
+	Integer [] valuesAula = {4, 4, 6, 4, 4, 4, 4, 6, 4, 4};
 	
 	/** Preferências por disciplinas para cada professor: utilizada em 'ProfessorDisciplinaConstraint' **/
 
@@ -61,7 +62,7 @@ public class Timetable extends CSP {
 		
 		/** Coleção de timeslots (aula) = {1 professor, 1 disciplina, n horarios}: utilizada em 'TimeslotConstraint' **/
 		
-		List<Timeslot> slots = new ArrayList<Timeslot>();
+		List<Timeslot> timeslots = new ArrayList<Timeslot>();
 		
 		/** Coleção de disciplinas: utilizada na constraint 'AllDifferent' **/
 		
@@ -120,19 +121,7 @@ public class Timetable extends CSP {
 				slot.addTimeslot(horario);
 			}
 			
-			slots.add(slot);
-			
-			System.out.println(slot.getDisciplina());
-			
-			for (Variable horario : slot.getHorarios()) {
-				System.out.println(horario + ", ");
-			}
-			
-			/** Uma disciplina deve ter um intervalo mínimo de aulas consecutivas dada a carga horária (30, 60, 75, 90) **/
-			
-			addConstraint(new TimeslotDisciplinaConstraint(slot, valuesDisciplina, valuesDia, valuesHorario));
-			
-			break;
+			timeslots.add(slot);
 		}
 		
 		/** Cada disciplina só poderá ter uma única oferta por semestre na grade curricular **/
@@ -142,8 +131,49 @@ public class Timetable extends CSP {
 		/** Os horários de um professor não podem ser repetidos **/
 		
 		for (int i = 0; i < valuesProfessor.length; i++) {
-			addConstraint(new TimeslotProfessorConstraint(slots, valuesProfessor[i]));
+			addConstraint(new TimeslotProfessorConstraint(timeslots, valuesProfessor[i]));
 		}
 		
+		for (Timeslot timeslot : timeslots) {
+			
+			for (int i = 0; i < timeslot.getHorarios().size(); i++) {
+				
+				Variable timeslot1 = timeslot.getHorarios().get(i);
+				Variable timeslot2 = null;
+				
+				if ((i+1) < timeslot.getHorarios().size()) {
+					
+					timeslot2 = timeslot.getHorarios().get(++i);
+					
+					/** Deve haver um número mínimo de ofertas de aula consecutivas. Para este problema, o mínimo é dois. **/
+					
+					addConstraint(new TimeslotDiasIguasConstraint(timeslot1, timeslot2));
+				}
+			}
+			
+			for (int i = 0; i < timeslot.getHorarios().size(); i++) {
+				
+				Variable timeslot1 = timeslot.getHorarios().get(i);
+				Variable timeslot2 = null;
+				
+				if (i == timeslot.getHorarios().size() - 1)
+					break;
+				
+				if (i == timeslot.getHorarios().size() - 2) {
+					
+					timeslot2 = timeslot.getHorarios().get(0);
+					
+					/** As ofertas de aula no mesmo dia não podem ultrapassar o mínimo definido para o problema **/
+					
+					addConstraint(new TimeslotDiasDiferentesConstraint(timeslot1, timeslot2));
+					
+				} else if ((i+2) < timeslot.getHorarios().size() && (i != timeslot.getHorarios().size() - 2)) {
+					
+					timeslot2 = timeslot.getHorarios().get(2+i);
+					
+					addConstraint(new TimeslotDiasDiferentesConstraint(timeslot1, timeslot2));
+				}
+			}
+		}
 	}
 }

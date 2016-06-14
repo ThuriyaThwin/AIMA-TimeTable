@@ -1,5 +1,7 @@
 package br.edu.ifma.csp.timetable.run;
 
+import java.util.Iterator;
+
 import br.edu.ifma.csp.timetable.csp.Timetable;
 import aima.core.search.csp.Assignment;
 import aima.core.search.csp.BacktrackingStrategy;
@@ -42,13 +44,22 @@ public class Main {
 			
 			if (sol.getVariables().contains(disciplina)) {
 				
-				for (Variable temp : sol.getVariables()) {
+				Iterator<Variable> it = sol.getVariables().iterator();
+				
+				while (it.hasNext()) {
+				
+					Variable temp = it.next();
+					
+					if (temp.getName().endsWith(disciplina.getName())) {
 						
-						if (temp.getName().endsWith(disciplina.getName())) {
-							
-							System.out.print(temp + " = " + sol.getAssignment(temp) + ", ");
+						System.out.print(temp + " = " + sol.getAssignment(temp));
+						
+						if (it.hasNext()) {
+							System.out.print(", ");
 						}
+					}
 				}
+								
 			} else {
 				
 				break;
