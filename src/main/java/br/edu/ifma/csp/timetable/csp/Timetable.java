@@ -163,16 +163,14 @@ public class Timetable extends CSP {
 					
 					timeslot2 = timeslot.getHorarios().get(0);
 					
-					/** As ofertas de aula no mesmo dia não podem ultrapassar o mínimo definido para o problema **/
-					
-					addConstraint(new TimeslotDiasDiferentesConstraint(timeslot1, timeslot2));
-					
 				} else if ((i+2) < timeslot.getHorarios().size() && (i != timeslot.getHorarios().size() - 2)) {
 					
 					timeslot2 = timeslot.getHorarios().get(2+i);
-					
-					addConstraint(new TimeslotDiasDiferentesConstraint(timeslot1, timeslot2));
 				}
+				
+				/** As ofertas de aula no mesmo dia não podem ultrapassar o mínimo definido para o problema **/
+				
+				addConstraint(new TimeslotDiasDiferentesConstraint(timeslot1, timeslot2));
 			}
 		}
 	}
