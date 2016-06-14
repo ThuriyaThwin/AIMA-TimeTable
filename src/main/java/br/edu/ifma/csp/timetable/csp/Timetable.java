@@ -9,8 +9,8 @@ import aima.core.search.csp.Domain;
 import aima.core.search.csp.Variable;
 import br.edu.ifma.csp.timetable.constraint.AllDifferentConstraint;
 import br.edu.ifma.csp.timetable.constraint.PreferenciaDisciplinaProfessorConstraint;
-import br.edu.ifma.csp.timetable.constraint.TimeslotConstraint;
 import br.edu.ifma.csp.timetable.constraint.TimeslotDisciplinaConstraint;
+import br.edu.ifma.csp.timetable.constraint.TimeslotProfessorConstraint;
 import br.edu.ifma.csp.timetable.model.Timeslot;
 
 public class Timetable extends CSP {
@@ -142,7 +142,7 @@ public class Timetable extends CSP {
 		/** Os horários de um professor não podem ser repetidos **/
 		
 		for (int i = 0; i < valuesProfessor.length; i++) {
-			addConstraint(new TimeslotConstraint(slots, valuesProfessor[i]));
+			addConstraint(new TimeslotProfessorConstraint(slots, valuesProfessor[i]));
 		}
 		
 	}

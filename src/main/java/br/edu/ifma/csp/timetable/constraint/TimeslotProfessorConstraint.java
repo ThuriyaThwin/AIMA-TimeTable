@@ -8,13 +8,13 @@ import aima.core.search.csp.Constraint;
 import aima.core.search.csp.Variable;
 import br.edu.ifma.csp.timetable.model.Timeslot;
 
-public class TimeslotConstraint implements Constraint {
+public class TimeslotProfessorConstraint implements Constraint {
 	
 	private List<Variable> scope;
 	private List<Timeslot> timeslots;
 	String professor;
 	
-	public TimeslotConstraint(List<Timeslot> timeslots, String professor) {
+	public TimeslotProfessorConstraint(List<Timeslot> timeslots, String professor) {
 		
 		this.scope = new ArrayList<Variable>();
 		this.timeslots = timeslots;
