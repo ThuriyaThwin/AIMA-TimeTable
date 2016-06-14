@@ -59,5 +59,7 @@ public class Main {
 		}
 		
 		System.out.println("\nTime to solve = " + (end - start));
+		
+		System.out.println(timetable.getVariables().size());
 	}
 }

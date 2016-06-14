@@ -1,26 +1,24 @@
 package br.edu.ifma.csp.timetable.constraint;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import br.edu.ifma.csp.timetable.model.Timeslot;
 import aima.core.search.csp.Assignment;
 import aima.core.search.csp.Constraint;
 import aima.core.search.csp.Variable;
+import br.edu.ifma.csp.timetable.model.Timeslot;
 
 public class TimeslotConstraint implements Constraint {
 	
 	private List<Variable> scope;
 	private List<Timeslot> timeslots;
-	String[] professores;
+	String professor;
 	
-	public TimeslotConstraint(List<Timeslot> timeslots, String [] professores) {
+	public TimeslotConstraint(List<Timeslot> timeslots, String professor) {
 		
 		this.scope = new ArrayList<Variable>();
 		this.timeslots = timeslots;
-		this.professores = professores;
+		this.professor = professor;
 		
 		for (Timeslot slot : timeslots) {
 			
@@ -83,32 +81,9 @@ public class TimeslotConstraint implements Constraint {
 	
 	@Override
 	public boolean isSatisfiedWith(Assignment assignment) {
+			
+		List<Variable> horarios = getHorariosByProfessor(professor, assignment);
 		
-		for (int i = 0; i < professores.length; i++) {
-			
-			List<Variable> horarios = getHorariosByProfessor(professores[i], assignment);
-			
-			if (horarios.size() > 0) {
-				
-				List<String> list = new ArrayList<String>();
-				
-				for (Variable varX : horarios) {
-					
-					String valueX = (String) assignment.getAssignment(varX);
-					
-					if (valueX != null) {
-						list.add(valueX);
-					}
-				}
-				
-				Set<String> set = new HashSet<String>(list);
-				
-				if (set.size() < list.size())
-					return false;
-			}
-		}
-			
-		return true;
+		return new AllDifferentConstraint(horarios).isSatisfiedWith(assignment);
 	}
-
 }

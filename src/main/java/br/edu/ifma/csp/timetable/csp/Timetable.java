@@ -45,7 +45,7 @@ public class Timetable extends CSP {
 	
 	/** Valores para criar os horários proporcionais à carga horária de uma disciplina **/
 	
-	Integer [] valuesAula = {4, 4, 4, 4, 4, 4, 4, 4, 4, 4};
+	Integer [] valuesAula = {6, 4, 4, 4, 4, 4, 4, 4, 4, 4};
 	
 	/** Preferências por disciplinas para cada professor: utilizada em 'ProfessorDisciplinaConstraint' **/
 
@@ -122,9 +122,17 @@ public class Timetable extends CSP {
 			
 			slots.add(slot);
 			
+			System.out.println(slot.getDisciplina());
+			
+			for (Variable horario : slot.getHorarios()) {
+				System.out.println(horario + ", ");
+			}
+			
 			/** Uma disciplina deve ter um intervalo mínimo de aulas consecutivas dada a carga horária (30, 60, 75, 90) **/
 			
-			addConstraint(new TimeslotDisciplinaConstraint(slot, valuesDisciplina, valuesDia));
+			addConstraint(new TimeslotDisciplinaConstraint(slot, valuesDisciplina, valuesDia, valuesHorario));
+			
+			break;
 		}
 		
 		/** Cada disciplina só poderá ter uma única oferta por semestre na grade curricular **/
@@ -133,6 +141,9 @@ public class Timetable extends CSP {
 		
 		/** Os horários de um professor não podem ser repetidos **/
 		
-		addConstraint(new TimeslotConstraint(slots, valuesProfessor));
+		for (int i = 0; i < valuesProfessor.length; i++) {
+			addConstraint(new TimeslotConstraint(slots, valuesProfessor[i]));
+		}
+		
 	}
 }
