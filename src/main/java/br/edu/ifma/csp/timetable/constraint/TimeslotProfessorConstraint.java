@@ -55,30 +55,6 @@ public class TimeslotProfessorConstraint implements Constraint {
 		return list;
 	}
 	
-	public int getQuantidadeHorariosByDia(List<Variable> horarios, String dia, Assignment assignment) {
-		
-		int cont = 0;
-		
-		for (Variable horario : horarios) {
-			
-			String value = (String) assignment.getAssignment(horario);
-			
-			if (value != null) {
-				
-				String valueDia = value.split("_")[0];
-				
-				if (valueDia.equals(dia))
-					cont += 1;
-			}
-		}
-		
-		return cont;
-	}
-	
-	public int getQuantidadeHorariosByDisciplina() {
-		return 0;
-	}
-	
 	@Override
 	public boolean isSatisfiedWith(Assignment assignment) {
 			

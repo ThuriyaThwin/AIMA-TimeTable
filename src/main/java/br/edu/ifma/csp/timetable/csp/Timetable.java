@@ -11,6 +11,7 @@ import br.edu.ifma.csp.timetable.constraint.AllDifferentConstraint;
 import br.edu.ifma.csp.timetable.constraint.PreferenciaDisciplinaProfessorConstraint;
 import br.edu.ifma.csp.timetable.constraint.TimeslotDiasDiferentesConstraint;
 import br.edu.ifma.csp.timetable.constraint.TimeslotDiasIguasConstraint;
+import br.edu.ifma.csp.timetable.constraint.TimeslotLocaisDiferentesConstraint;
 import br.edu.ifma.csp.timetable.constraint.TimeslotProfessorConstraint;
 import br.edu.ifma.csp.timetable.model.Timeslot;
 
@@ -118,6 +119,7 @@ public class Timetable extends CSP {
 				addVariable(local);
 				setDomain(local, new Domain(valuesLocal));
 				
+				slot.addLocal(local);
 				slot.addTimeslot(horario);
 			}
 			
@@ -132,6 +134,25 @@ public class Timetable extends CSP {
 		
 		for (int i = 0; i < valuesProfessor.length; i++) {
 			addConstraint(new TimeslotProfessorConstraint(timeslots, valuesProfessor[i]));
+		}
+		
+		for (Timeslot timeslot1 : timeslots) {
+			
+			for (Timeslot timeslot2 : timeslots) {
+				
+				if (!timeslot1.getDisciplina().getName().equals(timeslot2.getDisciplina().getName())) {
+					
+					for (int i = 0; i < timeslot1.getHorarios().size(); i++) {
+						
+						for (int j = 0; j < timeslot2.getHorarios().size(); j++) {
+							
+							/** O mesmo local não pode ser alocado para duas ofertas diferentes no mesmo horário **/
+							
+							addConstraint(new TimeslotLocaisDiferentesConstraint(timeslot1.getLocais().get(i), timeslot1.getHorarios().get(i), timeslot2.getLocais().get(j), timeslot2.getHorarios().get(j)));
+						}
+					}
+				}
+			}
 		}
 		
 		for (Timeslot timeslot : timeslots) {

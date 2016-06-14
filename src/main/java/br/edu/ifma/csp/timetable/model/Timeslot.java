@@ -9,17 +9,18 @@ public class Timeslot {
 	
 	private Variable professor;
 	private Variable disciplina;
-	private Variable local;
+	private List<Variable> locais;
 	private List<Variable> horarios;
 	
 	public Timeslot(Variable professor, Variable disciplina) {
 		this.professor = professor;
 		this.disciplina = disciplina;
+		this.locais = new ArrayList<Variable>();
 		this.horarios = new ArrayList<Variable>();
 	}
 	
 	public void addLocal(Variable local) {
-		this.local = local;
+		this.locais.add(local);
 	}
 	
 	public void addTimeslot(Variable horario) {
@@ -30,12 +31,12 @@ public class Timeslot {
 		return horarios;
 	}
 	
-	public Variable getProfessor() {
-		return professor;
+	public List<Variable> getLocais() {
+		return locais;
 	}
 	
-	public Variable getLocal() {
-		return local;
+	public Variable getProfessor() {
+		return professor;
 	}
 	
 	public Variable getDisciplina() {
