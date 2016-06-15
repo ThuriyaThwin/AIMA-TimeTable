@@ -16,22 +16,12 @@
 			</arguments>
 		</buildCommand>
 		<buildCommand>
-<<<<<<< HEAD
-			<name>org.eclipse.babel.editor.rbeBuilder</name>
-=======
-			<name>org.hibernate.eclipse.console.hibernateBuilder</name>
->>>>>>> ea19af7fe2ce36188842799220bd350ae00ffebe
-			<arguments>
-			</arguments>
 		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.m2e.core.maven2Nature</nature>
-<<<<<<< HEAD
 		<nature>com.jaspersoft.studio.babel.editor.rbeNature</nature>
-=======
 		<nature>org.hibernate.eclipse.console.hibernateNature</nature>
->>>>>>> ea19af7fe2ce36188842799220bd350ae00ffebe
 	</natures>
 </projectDescription>
