@@ -1,67 +1,57 @@
 package br.edu.ifma.csp.timetable.model;
 
-public class Disciplina {
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+@Table(name="DISCIPLINA")
+public class Disciplina extends Entidade {
+
+	private static final long serialVersionUID = -359725241949986880L;
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="ID_DISCIPLINA")
 	private int id;
+	
+	@NotNull
+	@Column(name="CODIGO")
 	private String codigo;
-	private String nome;
-	private int periodo;
-	private int creditos;
-	private int cargaHoraria;
+	
+	@NotNull
+	@Column(name="DESCRICAO")
+	private String descricao;
 	
 	public Disciplina() {
-	
+		
 	}
-
+	
 	public int getId() {
 		return id;
 	}
-
+	
 	public void setId(int id) {
 		this.id = id;
 	}
-
+	
 	public String getCodigo() {
 		return codigo;
 	}
-
+	
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;
 	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public int getPeriodo() {
-		return periodo;
-	}
-
-	public void setPeriodo(int periodo) {
-		this.periodo = periodo;
-	}
-
-	public int getCreditos() {
-		return creditos;
-	}
-
-	public void setCreditos(int creditos) {
-		this.creditos = creditos;
-	}
-
-	public int getCargaHoraria() {
-		return cargaHoraria;
-	}
-
-	public void setCargaHoraria(int cargaHoraria) {
-		this.cargaHoraria = cargaHoraria;
+	
+	public String getDescricao() {
+		return descricao;
 	}
 	
-	public String toString() {
-		return this.getNome();
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 }

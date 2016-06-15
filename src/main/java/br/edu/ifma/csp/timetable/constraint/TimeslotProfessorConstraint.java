@@ -6,7 +6,7 @@ import java.util.List;
 import aima.core.search.csp.Assignment;
 import aima.core.search.csp.Constraint;
 import aima.core.search.csp.Variable;
-import br.edu.ifma.csp.timetable.model.Timeslot;
+import br.edu.ifma.csp.timetable.csp.Timeslot;
 
 public class TimeslotProfessorConstraint implements Constraint {
 	

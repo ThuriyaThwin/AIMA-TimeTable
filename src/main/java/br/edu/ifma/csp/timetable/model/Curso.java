@@ -9,25 +9,24 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name="PROFESSOR")
-public class Professor extends Entidade {
-	
-	private static final long serialVersionUID = -4678387504944518658L;
-	
-	public Professor() {
-		
-	}
+@Table(name="CURSO")
+public class Curso extends Entidade {
+
+	private static final long serialVersionUID = 7766909233595823863L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="ID_PROFESSOR")
+	@Column(name="ID_CURSO")
 	private int id;
 	
 	@NotNull
 	@Column(name="NOME")
 	private String nome;
 	
-	@Override
+	public Curso() {
+		
+	}
+
 	public int getId() {
 		return id;
 	}
