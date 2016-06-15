@@ -13,7 +13,6 @@ import br.edu.ifma.csp.timetable.constraint.TimeslotDiasDiferentesConstraint;
 import br.edu.ifma.csp.timetable.constraint.TimeslotDiasIguasConstraint;
 import br.edu.ifma.csp.timetable.constraint.TimeslotLocaisDiferentesConstraint;
 import br.edu.ifma.csp.timetable.constraint.TimeslotProfessorConstraint;
-import br.edu.ifma.csp.timetable.model.Timeslot;
 
 public class Timetable extends CSP {
 	
@@ -91,7 +90,7 @@ public class Timetable extends CSP {
 			 * professores que ministram ao menos 1 disciplina compreendida na matriz curricular.
 			 */
 			
-			Variable professor = new Variable("PF_" + disciplina.getName());
+			Variable professor = new Variable("P_" + disciplina.getName());
 			addVariable(professor);
 			setDomain(professor, new Domain(valuesProfessor));
 			
