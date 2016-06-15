@@ -1,12 +1,16 @@
 package br.edu.ifma.csp.timetable.model;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+@Entity
+@Table(name="MATRIZ_CURRICULAR")
 public class MatrizCurricular extends Entidade {
 
 	private static final long serialVersionUID = -932527619399754046L;

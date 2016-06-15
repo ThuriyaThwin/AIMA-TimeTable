@@ -179,12 +179,10 @@ public class Timetable extends CSP {
 				if (i == timeslot.getHorarios().size() - 1)
 					break;
 				
-				if (i == timeslot.getHorarios().size() - 2) {
-					
+				if (i == timeslot.getHorarios().size() - 2) {	
 					timeslot2 = timeslot.getHorarios().get(0);
 					
 				} else if ((i+2) < timeslot.getHorarios().size() && (i != timeslot.getHorarios().size() - 2)) {
-					
 					timeslot2 = timeslot.getHorarios().get(2+i);
 				}
 				

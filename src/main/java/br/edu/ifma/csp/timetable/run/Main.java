@@ -2,12 +2,12 @@ package br.edu.ifma.csp.timetable.run;
 
 import java.util.Iterator;
 
-import br.edu.ifma.csp.timetable.csp.Timetable;
 import aima.core.search.csp.Assignment;
 import aima.core.search.csp.BacktrackingStrategy;
 import aima.core.search.csp.CSP;
 import aima.core.search.csp.CSPStateListener;
 import aima.core.search.csp.Variable;
+import br.edu.ifma.csp.timetable.csp.Timetable;
 
 public class Main {
 	
@@ -55,6 +55,7 @@ public class Main {
 						System.out.print(temp + " = " + sol.getAssignment(temp));
 						
 						if (it.hasNext()) {
+							
 							System.out.print(", ");
 						}
 					}
