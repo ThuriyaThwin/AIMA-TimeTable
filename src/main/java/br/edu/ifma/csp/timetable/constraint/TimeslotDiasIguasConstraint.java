@@ -45,7 +45,10 @@ public class TimeslotDiasIguasConstraint implements Constraint {
 		
 		if (valueTimeslot1 != null && valueTimeslot2 != null) {
 			
-			if (!valueTimeslot1.split("_")[0].equals(valueTimeslot2.split("_")[0]))
+			String dia1 = valueTimeslot1.split("_")[0];
+			String dia2 = valueTimeslot2.split("_")[0];
+			
+			if (!dia1.equals(dia2))
 				return false;
 		}
 		

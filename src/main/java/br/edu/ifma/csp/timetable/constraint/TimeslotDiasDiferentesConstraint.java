@@ -1,6 +1,7 @@
 package br.edu.ifma.csp.timetable.constraint;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import aima.core.search.csp.Assignment;
@@ -12,8 +13,9 @@ public class TimeslotDiasDiferentesConstraint implements Constraint {
 	private List<Variable> scope;
 	private Variable timeslot1;
 	private Variable timeslot2;
+	String [] dias;
 	
-	public TimeslotDiasDiferentesConstraint(Variable timeslot1, Variable timeslot2) {
+	public TimeslotDiasDiferentesConstraint(Variable timeslot1, Variable timeslot2, String [] dias) {
 		
 		this.scope = new ArrayList<Variable>();
 		
@@ -22,6 +24,8 @@ public class TimeslotDiasDiferentesConstraint implements Constraint {
 		
 		this.scope.add(timeslot1);
 		this.scope.add(timeslot2);
+		
+		this.dias = dias;
 	}
 	
 	public Variable getTimeslot1() {
@@ -43,12 +47,23 @@ public class TimeslotDiasDiferentesConstraint implements Constraint {
 		if (timeslot1 == null || timeslot2 == null || (timeslot1 == timeslot2))
 			return true;
 		
+		List<String> lista = new ArrayList<String>(Arrays.asList(dias));
+		
 		String valueTimeslot1 = (String) assignment.getAssignment(timeslot1);
 		String valueTimeslot2 = (String) assignment.getAssignment(timeslot2);
 		
 		if (valueTimeslot1 != null && valueTimeslot2 != null) {
 			
-			if (valueTimeslot1.split("_")[0].equals(valueTimeslot2.split("_")[0]))
+			String dia1 = valueTimeslot1.split("_")[0];
+			String dia2 = valueTimeslot2.split("_")[0];
+			
+			int indexDia1 = lista.indexOf(dia1);
+			int indexDia2 = lista.indexOf(dia2);
+			
+			if (dia1.equals(dia2))
+				return false;
+			
+			if (indexDia1 + indexDia2 < 2)
 				return false;
 		}
 		

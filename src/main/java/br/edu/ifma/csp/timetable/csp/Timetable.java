@@ -188,7 +188,7 @@ public class Timetable extends CSP {
 				
 				/** As ofertas de aula no mesmo dia não podem ultrapassar o mínimo definido para o problema **/
 				
-				addConstraint(new TimeslotDiasDiferentesConstraint(timeslot1, timeslot2));
+				addConstraint(new TimeslotDiasDiferentesConstraint(timeslot1, timeslot2, valuesDia));
 			}
 		}
 	}
