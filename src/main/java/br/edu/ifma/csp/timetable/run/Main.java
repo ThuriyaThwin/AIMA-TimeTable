@@ -16,8 +16,10 @@ public class Main {
 		Timetable timetable = new Timetable();
 		
 		BacktrackingStrategy bts = new BacktrackingStrategy();
+		
 		bts.addCSPStateListener(new CSPStateListener() {
-		    @Override
+		   
+			@Override
 		    public void stateChanged(Assignment assignment, CSP csp) {
 		        System.out.println("Assignment evolved : " + assignment);
 		    }
@@ -30,9 +32,7 @@ public class Main {
 		
 		double start = System.currentTimeMillis();
 		
-		Assignment sol = null;
-
-		sol = bts.solve(timetable);
+		Assignment sol = bts.solve(timetable);
 		
 		double end = System.currentTimeMillis();
 		
