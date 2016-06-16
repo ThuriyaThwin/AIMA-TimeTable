@@ -5,52 +5,53 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 @MappedSuperclass
 public abstract class Entidade implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
+
+	private static final long serialVersionUID = 109632090320375714L;
 
 	@NotNull
 	@Column(name="USUARIO_ULT_ALTERACAO")
-	private String usuarioUltimaAlteracao;
+	private String usuarioUltAlteracao;
 	
-	@Temporal(TemporalType.TIMESTAMP)
 	@NotNull
 	@Column(name="DATA_ULT_ALTERACAO")
-	private Date dataUltimaAlteracao;
+	private Date dataUltAlteracao;
 	
-	@Version
 	@NotNull
+	@Version
 	@Column(name="VERSAO")
 	private int versao;
 	
 	public abstract int getId();
-
-	public String getUsuarioUltimaAlteracao() {
-		return usuarioUltimaAlteracao;
+	
+	public Entidade() {
+		
 	}
-
-	public void setUsuarioUltimaAlteracao(String usuarioUltimaAlteracao) {
-		this.usuarioUltimaAlteracao = usuarioUltimaAlteracao;
+	
+	public String getUsuarioUltAlteracao() {
+		return usuarioUltAlteracao;
 	}
-
-	public Date getDataUltimaAlteracao() {
-		return dataUltimaAlteracao;
+	
+	public void setUsuarioUltAlteracao(String usuarioUltAlteracao) {
+		this.usuarioUltAlteracao = usuarioUltAlteracao;
 	}
-
-	public void setDataUltimaAlteracao(Date dataUltimaAlteracao) {
-		this.dataUltimaAlteracao = dataUltimaAlteracao;
+	
+	public Date getDataUltAlteracao() {
+		return dataUltAlteracao;
 	}
-
+	
+	public void setDataUltAlteracao(Date dataUltAlteracao) {
+		this.dataUltAlteracao = dataUltAlteracao;
+	}
+	
 	public int getVersao() {
 		return versao;
 	}
-
+	
 	public void setVersao(int versao) {
 		this.versao = versao;
 	}
