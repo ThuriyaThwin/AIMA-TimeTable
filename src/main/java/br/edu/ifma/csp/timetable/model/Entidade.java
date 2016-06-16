@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
@@ -19,6 +21,7 @@ public abstract class Entidade implements Serializable {
 	
 	@NotNull
 	@Column(name="DATA_ULT_ALTERACAO")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataUltAlteracao;
 	
 	@NotNull
