@@ -8,6 +8,7 @@ import aima.core.search.csp.CSP;
 import aima.core.search.csp.Domain;
 import aima.core.search.csp.Variable;
 import br.edu.ifma.csp.timetable.constraint.AllDifferentConstraint;
+import br.edu.ifma.csp.timetable.constraint.LocaisIguaisConstraint;
 import br.edu.ifma.csp.timetable.constraint.PreferenciaDisciplinaProfessorConstraint;
 import br.edu.ifma.csp.timetable.constraint.TimeslotDiasDiferentesConstraint;
 import br.edu.ifma.csp.timetable.constraint.TimeslotDiasIguasConstraint;
@@ -18,15 +19,24 @@ public class Timetable extends CSP {
 	
 	/** Valores para o domínio: Professor **/
 	
-	String  [] valuesProfessor = {"Josenildo", "Carla", "Omar", "Karla", "Eva"};
+	String  [] valuesProfessor = {"Josenildo", "Carla", "Omar", "Karla", "Eva", "Raimundo", "João", "Rayane", "Mauro", 
+			                      "Márcio", "Eveline", "Valdir", "Gentil", "Luis Carlos", "Angela"};
 	
 	/** Valores para o domínio: Disciplina **/
 	
-	String  [] valuesDisciplina = {"IA", "BD", "IPO", "LPI", "LPII", "ICC", "ES", "AEDI", "AEDII", "ANPL"};
+	String  [] valuesDisciplina = {"Cálculo I", "Cálculo Vetorial", "Filosofia", "ICC", "Metodologia Científica", // 4
+								   "Fundamentos de S.I", "Inglês", "LP I", "Matemática Discreta", "Org. Arq. Computadores", "Prob. Estatística", // 10
+								   "Álgebra Linear", "AED I", "LP II", "SO I", "Sociologia", // 15
+								   "AED II", "BD I", "ES I", "IHC", "Redes I", // 20
+								   "Análise I", "BD II", "Gestão e organização", "Lab. BD", "LP III", "Redes II", // 26
+								   "Análise II", "Ger. Projetos", "IA", "LP Web", // 30
+								   "Comp. Ética e Sociedade", "IPO", "Monografia I", // 33
+								   "Empreendedorismo"}; // 34
 	
 	/** Valores para o domínio: Local **/
 	
-	String  [] valuesLocal = {"Lab. 24", "Lab. 25", "Lab. 26", "Lab. 27"}; 
+	String  [] valuesLocal = {"Lab. 24", "Lab. 25", "Lab. 26", "Lab. 27", "Sala 17", "Sala 20", "Sala 25", "Sala 26", 
+			                  "Sala 15", "Sala 16", "Lab. Mult", "Sala 32", "Sala 28", "Sala 27", "Sala 18", "Sala 19", "Sala 21"}; 
 	
 	/** Valores para o domínio: Horario **/
 	
@@ -46,19 +56,49 @@ public class Timetable extends CSP {
 	
 	/** Valores para criar os horários proporcionais à carga horária de uma disciplina **/
 	
-	Integer [] valuesAula = {4, 4, 6, 4, 4, 4, 4, 6, 4, 4};
+	Integer [] valuesAula = {6, 4, 4, 6, 4, 
+            4, 4, 4, 4, 4, 4,
+            4, 6, 6, 4, 4,
+            4, 4, 4, 4, 4,
+            4, 4, 4, 4, 4, 4,
+            6, 4, 4, 6,
+            4, 6, 4,
+            4};
+	
+	Integer [] valuesPeriodo = {6, 4, 7, 2, 3, 1, 4, 3, 4, 5, 2};
 	
 	/** Preferências por disciplinas para cada professor: utilizada em 'ProfessorDisciplinaConstraint' **/
 
 	HashMap<String, Integer[]> preferencias = new HashMap<String, Integer[]>();
 	
+	HashMap<Integer, String[]> periodos = new HashMap<Integer, String[]>();
+	
 	public Timetable() {
 		
-		preferencias.put("Josenildo", new Integer[]{0, 2, 7});
-		preferencias.put("Carla", new Integer[]{1, 9});
-		preferencias.put("Omar", new Integer[]{0, 2, 4, 8});
-		preferencias.put("Karla", new Integer[]{3, 6, 9});
-		preferencias.put("Eva", new Integer[]{2, 3, 5, 7});
+		preferencias.put("Josenildo", new Integer[]{12, 24, 29, 32});
+		preferencias.put("Carla", new Integer[]{17, 21, 27});
+		preferencias.put("Omar", new Integer[]{13, 16, 29, 32});
+		preferencias.put("Karla", new Integer[]{3, 7, 18, 21, 27});
+		preferencias.put("Eva", new Integer[]{3, 5, 7, 12});
+		preferencias.put("Raimundo", new Integer[]{3, 7, 8, 13, 32});
+		preferencias.put("João", new Integer[]{22, 24, 25, 30});
+		preferencias.put("Rayane", new Integer[]{0, 1, 10, 11});
+		preferencias.put("Mauro", new Integer[]{13, 25, 28, 30});
+		preferencias.put("Márcio", new Integer[]{9, 14, 20, 26});
+		preferencias.put("Eveline", new Integer[]{3, 7, 19, 21, 27});
+		preferencias.put("Valdir", new Integer[]{2, 4, 15});
+		preferencias.put("Gentil", new Integer[]{12, 15, 31});
+		preferencias.put("Luis Carlos", new Integer[]{6, 33});
+		preferencias.put("Angela", new Integer[]{23, 34});
+		
+		periodos.put(1, new String[]{"Cálculo I", "Cálculo Vetorial", "Filosofia", "ICC", "Metodologia Científica"});
+		periodos.put(2, new String[]{"Fundamentos de S.I", "Inglês", "LP I", "Matemática Discreta", "Org. Arq. Computadores", "Prob. Estatística"});
+		periodos.put(3, new String[]{"Álgebra Linear", "AED I", "LP II", "SO I", "Sociologia"});
+		periodos.put(4, new String[]{"AED II", "BD I", "ES I", "IHC", "Redes I"});
+		periodos.put(5, new String[]{"Análise I", "BD II", "Gestão e organização", "Lab. BD", "LP III", "Redes II"});
+		periodos.put(6, new String[]{"Análise II", "Ger. Projetos", "IA", "LP Web"});
+		periodos.put(7, new String[]{"Comp. Ética e Sociedade", "IPO", "Monografia I"});
+		periodos.put(8, new String[]{"Empreendedorismo", "Monografia II"});
 		
 		/** Coleção de timeslots (aula) = {1 professor, 1 disciplina, n horarios}: utilizada em 'TimeslotConstraint' **/
 		
@@ -148,6 +188,10 @@ public class Timetable extends CSP {
 							/** O mesmo local não pode ser alocado para duas ofertas diferentes no mesmo horário **/
 							
 							addConstraint(new TimeslotLocaisDiferentesConstraint(timeslot1.getLocais().get(i), timeslot1.getHorarios().get(i), timeslot2.getLocais().get(j), timeslot2.getHorarios().get(j)));
+							
+							/** Disciplinas de mesmo período não podem ter as aulas ofertadas no mesmo horário **/
+							
+//							addConstraint(new PeriodosDisciplinaConstraint(timeslot1.getDisciplina(), timeslot1.getHorarios().get(i), timeslot2.getDisciplina(), timeslot2.getHorarios().get(j), periodos));
 						}
 					}
 				}
@@ -168,6 +212,21 @@ public class Timetable extends CSP {
 					/** Deve haver um número mínimo de ofertas de aula consecutivas. Para este problema, o mínimo é dois. **/
 					
 					addConstraint(new TimeslotDiasIguasConstraint(timeslot1, timeslot2));
+				}
+			}
+			
+			for (int i = 0; i < timeslot.getLocais().size(); i++) {
+				
+				Variable local1 = timeslot.getLocais().get(i);
+				Variable local2 = null;
+				
+				if ((i+1) < timeslot.getLocais().size()) {
+					
+					local2 = timeslot.getLocais().get(++i);
+					
+					/** A oferta mínima de uma mesma disciplina deve ocorrer no mesmo local. **/
+					
+					addConstraint(new LocaisIguaisConstraint(local1, local2));
 				}
 			}
 			
