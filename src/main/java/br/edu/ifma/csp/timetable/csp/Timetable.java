@@ -9,6 +9,7 @@ import aima.core.search.csp.Domain;
 import aima.core.search.csp.Variable;
 import br.edu.ifma.csp.timetable.constraint.AllDifferentConstraint;
 import br.edu.ifma.csp.timetable.constraint.LocaisIguaisConstraint;
+import br.edu.ifma.csp.timetable.constraint.PeriodosDisciplinaConstraint;
 import br.edu.ifma.csp.timetable.constraint.PreferenciaDisciplinaProfessorConstraint;
 import br.edu.ifma.csp.timetable.constraint.TimeslotDiasDiferentesConstraint;
 import br.edu.ifma.csp.timetable.constraint.TimeslotDiasIguasConstraint;
@@ -41,10 +42,10 @@ public class Timetable extends CSP {
 	/** Valores para o domínio: Horario **/
 	
 	String  [] valuesHorario = {"SEG_1650", "SEG_1740", "SEG_1830", "SEG_1920", "SEG_2010", "SEG_2100", "SEG_2150",
-			   			  		"TER_1650", "TER_1740", "TER_1830", "TER_1920", "TER_2010", "TER_2100", "TER_2150",
-			  			  		"QUA_1650", "QUA_1740", "QUA_1830", "QUA_1920", "QUA_2010", "QUA_2100", "QUA_2150",
-			  			  		"QUI_1650", "QUI_1740", "QUI_1830", "QUI_1920", "QUI_2010", "QUI_2100", "QUI_2150",
-			  			  		"SEX_1650", "SEX_1740", "SEX_1830", "SEX_1920", "SEX_2010", "SEX_2100", "SEX_2150"};
+								"TER_1650", "TER_1740", "TER_1830", "TER_1920", "TER_2010", "TER_2100", "TER_2150",
+								"QUA_1650", "QUA_1740", "QUA_1830", "QUA_1920", "QUA_2010", "QUA_2100", "QUA_2150",
+								"QUI_1650", "QUI_1740", "QUI_1830", "QUI_1920", "QUI_2010", "QUI_2100", "QUI_2150",
+								"SEX_1650", "SEX_1740", "SEX_1830", "SEX_1920", "SEX_2010", "SEX_2100", "SEX_2150"};
 	
 	/** Domínio de dias letivos: utilizada em 'TimeslotDisciplinaConstraint' **/
 	
@@ -98,7 +99,7 @@ public class Timetable extends CSP {
 		periodos.put(5, new String[]{"Análise I", "BD II", "Gestão e organização", "Lab. BD", "LP III", "Redes II"});
 		periodos.put(6, new String[]{"Análise II", "Ger. Projetos", "IA", "LP Web"});
 		periodos.put(7, new String[]{"Comp. Ética e Sociedade", "IPO", "Monografia I"});
-		periodos.put(8, new String[]{"Empreendedorismo", "Monografia II"});
+		periodos.put(8, new String[]{"Empreendedorismo"});
 		
 		/** Coleção de timeslots (aula) = {1 professor, 1 disciplina, n horarios}: utilizada em 'TimeslotConstraint' **/
 		
@@ -191,7 +192,7 @@ public class Timetable extends CSP {
 							
 							/** Disciplinas de mesmo período não podem ter as aulas ofertadas no mesmo horário **/
 							
-//							addConstraint(new PeriodosDisciplinaConstraint(timeslot1.getDisciplina(), timeslot1.getHorarios().get(i), timeslot2.getDisciplina(), timeslot2.getHorarios().get(j), periodos));
+							addConstraint(new PeriodosDisciplinaConstraint(timeslot1.getDisciplina(), timeslot1.getHorarios().get(i), timeslot2.getDisciplina(), timeslot2.getHorarios().get(j), periodos));
 						}
 					}
 				}
@@ -250,5 +251,9 @@ public class Timetable extends CSP {
 				addConstraint(new TimeslotDiasDiferentesConstraint(timeslot1, timeslot2, valuesDia));
 			}
 		}
+	}
+	
+	public HashMap<Integer, String[]> getPeriodos() {
+		return periodos;
 	}
 }
